@@ -28,7 +28,11 @@
 					<p class="letter" style="font-size: 25px; text-align: right;">~ Earl Grey</p>
 				</div>
 			</div>
+			<div class="custom-footer">
+				<div class="custom-profilefoot"></div>
+			</div>
 		</div>
 	</div>
+			<?php include("template/main/footer.php"); ?>
 </body>
 </html>

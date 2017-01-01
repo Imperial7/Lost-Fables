@@ -37,7 +37,11 @@
 				}
 				?>
 			</div>
+			<div class="custom-footer">
+				<div class="custom-profilefoot"></div>
+			</div>
 		</div>
 	</div>
+			<?php include("template/main/footer.php"); ?>
 </body>
 </html>

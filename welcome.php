@@ -34,7 +34,11 @@
 					<p><a href="test.php">Enter Website</p>
 				</div>
 			</div>
+			<div class="custom-footer">
+				<div class="custom-profilefoot"></div>
+			</div>
 		</div>
 	</div>
+			<?php include("template/main/footer.php"); ?>
 </body>
 </html>

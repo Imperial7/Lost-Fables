@@ -87,6 +87,7 @@
 					?>
 				</div>
 			</div>
+			<?php include("template/main/footer.php"); ?>
 		</div>
 	</div>
 
@@ -162,8 +163,12 @@
 				?>
 				</div>
 			</div>
+			<div class="custom-footer">
+				<div class="custom-profilefoot"></div>
+			</div>
 		</div>
 	</div>
+			<?php include("template/main/footer.php"); ?>
 <?php } ?>
 </body>
 </html>
