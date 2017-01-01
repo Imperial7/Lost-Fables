@@ -42,7 +42,7 @@
 				<div class="col-sm-4">
 				</div>
 			</div>
-				
+
 				<?php
 				if('POST' === $_SERVER['REQUEST_METHOD'] && isset($_POST['name']) && isset($_POST['email']) && isset($_POST['password']) && $_POST['spam'] == '8') {
 					$name = mysqli_real_escape_string($db_conn, $_POST['name']);
@@ -55,13 +55,17 @@
 					$welcome = "INSERT INTO `notification` (`notification`, `link`, `owner`) VALUES ('" . $notification . "', 'thankyou.php', '" . $name . "')";
 				    if($db_conn->query($welcome)) {}
 				    if($db_conn->query($insert)) {
-				        echo "<script type='text/javascript'>window.top.location='test.php';</script>"; exit;
+								//"The old way"
+								//echo "<script type='text/javascript'>window.top.location='test.php';</script>";
+								//"The new way"
+								header("Location: test.php");
+							 	exit;
 				    } else {
 				        echo "Error: " . $insert . "<br>" . $db_conn->error;
 					}
 
 				}
-				
+
 				?>
 			</div>
 		</div>

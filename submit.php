@@ -9,7 +9,9 @@
 	<title>Lost Fables</title>
 </head>
 <body>
-<?php if (!isset($_SESSION['login_user'])) { echo "<script type='text/javascript'>window.top.location='index.php';</script>"; exit; } else { ?>
+<?php if (!isset($_SESSION['login_user'])) {
+	header("Location: index.php");
+	exit; } else { ?>
 	<div class="container">
 		<div class="custom-profilecontainer">
 			<div class="row">
