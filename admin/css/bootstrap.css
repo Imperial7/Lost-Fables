@@ -16,6 +16,7 @@ html {
   -ms-text-size-adjust: 100%;
   -webkit-text-size-adjust: 100%;
 }
+@fa-font-path:   "../fonts";
 body {
   margin: 0;
 }
@@ -7284,6 +7285,15 @@ a.list-group-item-danger.active:focus {
   padding: 10px;
   max-width: 250px;
 }
+.custom-container-nolimit {
+  background-color: rgba(17, 17, 17, 0.46);
+  color: #AAAAAA;
+  vertical-align: top;
+  display: inline-block;
+  margin: 0 auto;
+  margin-top: 5px;
+  padding: 10px;
+}
 .custom-panel {
   margin-bottom: 20px;
   background-color: #2e3338;
@@ -7300,8 +7310,4 @@ a.list-group-item-danger.active:focus {
   border-bottom: 1px solid transparent;
   border-top-right-radius: 3px;
   border-top-left-radius: 3px;
-}
-.custom-navbar {
-  background-image: url(../images/navbar.png);
-  min-height: 50px;
 }
