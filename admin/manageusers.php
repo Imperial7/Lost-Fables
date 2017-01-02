@@ -85,7 +85,7 @@ if ($loggedadmin >= 100) {
 													$pointupdate = "from: ".$prevpoints."<br/>to: ".$points;
 													$time = date("Y/m/d - h:i:sa");
 														$insertlog = "INSERT INTO adminlogger (username, action, user, previous, changes, points, timeadded)
-														VALUES ('$session', 'point update', '$user', '$prevpoints', '$points', '$pointupdate', '$time')";
+														VALUES ('$session', 'point update', '$user', '$prevpoints', '$pointupdate', '$pointupdate', '$time')";
 
 													if ($db_conn->query($insert) === TRUE) {
 													    echo "<br />Items Successfully Updated";
