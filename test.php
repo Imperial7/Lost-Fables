@@ -62,8 +62,13 @@
 							}
 					?>
 				</div>
+			</div>
+			<div class="custom-footer">
+				<div class="custom-profilefoot"></div>
+			</div>
 		</div>
 	</div>
+	<?php include("template/main/footer.php"); ?>
 <?php } else { ?>
 	<div class="container">
 		<div class="custom-profilecontainer">
