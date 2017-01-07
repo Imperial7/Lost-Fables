@@ -7457,3 +7457,14 @@ span {
 	-webkit-border-radius: 50px;
 	border-radius: 50px;
 }
+.banner
+{
+	background-image: url(../images/banner.png);
+	/*background-size: 100%;*/
+	background-repeat: no-repeat;
+	background-position: 50% 50px;
+	z-index: 1;
+	margin: -58px 0px -65px 0px;
+	min-height: 400px;
+	display: -webkit-box;
+}
