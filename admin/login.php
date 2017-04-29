@@ -35,7 +35,7 @@
 										<button type="submit" class="btn btn-default">Login</button>
 									</fieldset><br/>
 								</center></div>
-								<center><b>Having trouble logging in?</b> <a href="http://felvargs.com/adminsystem/logout.php">Click Here</a> and try again!</center>
+								<center><b>Having trouble logging in?</b> <a href="http://lostfables.com/admin/logout.php">Click Here</a> and try again!</center>
 							</div>
 						</form>
 						<?php

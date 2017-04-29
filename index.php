@@ -21,8 +21,8 @@
 						<div class="custom-contenttable">
 						<i class="fa fa-envelope-o fa-5x" aria-hidden="true"></i>
 						<h2>Get Updates</h2>
-						<p>Want to find out when we're launching? You can sign up to our Newsletter</p>
-						<a href=""><p>Click Here</p></a>
+						<p>Want more information? follow us on Twitter!</p>
+						<a href="https://twitter.com/LostFables"><p>Click Here</p></a>
 						</div>
 					</div>
 					<div class="col-sm-4">

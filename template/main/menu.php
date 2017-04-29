@@ -25,10 +25,11 @@ if (isset($login_session)) {
 						<li><a href="test.php">Browse</a></li>
 						<li><a href="news.php">News</a></li>
 						<li><a href="submit.php">submit</a></li>
+						<li><a href="groups.php">Browse Groups</a></li>
 						<li class="dropdown">
-							<a href="#" class="dropdown" data-toggle="dropdown" role="button" aria-expanded="false">Dropdown <span class="caret"></span></a>
+							<a href="#" class="dropdown" data-toggle="dropdown" role="button" aria-expanded="false">Content <span class="caret"></span></a>
 							<ul class="dropdown-menu" role="menu">
-								<li><a href="">Action</a></li>
+								<li><a href="groups.php">Groups</a></li>
 								<li><a href="">Another action</a></li>
 								<li><a href="">Something else here</a></li>
 								<li class="divider"></li>

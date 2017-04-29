@@ -1,27 +1,34 @@
-<?php
-		include('session.php');
-		include("config.php");
-		include("admincheck.php");
+<?php 
+	include("config.php");
+	include('session.php');
+	include("admincheck.php");
+	   if ($loggedadmin >= 100) {
 	?>
-<html>
-	<head>
-		<link href="css/bootstrap.css" rel="stylesheet" type="text/css" />
-		<link rel="stylesheet" href="css/font-awesome.min.css">
-	</head>
-	<body>
-
-		<div class="wrapper">
-			<div class="container">
-				<div class="rollwrapper">
-					<?php include("menu.php"); ?>
-					<br />
-					<div class="container">
-					<?php
-
-//CHECK ADMIN LEVELS
-if ($loggedadmin >= 100) {
-						
-						$user = $_GET["user"];
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	  <meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>Lost Fables Admin Panel</title>
+	<!-- BOOTSTRAP STYLES-->
+	<link href="assets/css/bootstrap.css" rel="stylesheet" />
+	 <!-- FONTAWESOME STYLES-->
+	<link href="assets/css/font-awesome.css" rel="stylesheet" />
+	 <!-- MORRIS CHART STYLES-->
+	<link href="assets/js/morris/morris-0.4.3.min.css" rel="stylesheet" />
+		<!-- CUSTOM STYLES-->
+	<link href="assets/css/custom.css" rel="stylesheet" />
+	 <!-- GOOGLE FONTS-->
+   <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
+</head>
+<body>
+		<!-- /. NAV SIDE  -->
+	<?php include 'menu.php';
+	?>
+		<div id="page-wrapper" >
+				<?php include("warning.php"); ?>
+			<div id="page-inner">
+				<?php
+					$user = $_GET["user"];
 							if (isset($user)) {
 								$sql = "SELECT * FROM user WHERE username = '$user'";
 								$result = $db_conn->query($sql);
@@ -30,95 +37,102 @@ if ($loggedadmin >= 100) {
 									while($row = $result->fetch_assoc()) {
 										$prevpoints = $row["points"];
 										$points = number_format($row['points']);
-										echo 	"<center><div class='custom-container'>" . 
-													$row["id"] . 
-												"</div>
-												<div class='custom-container'>" . 
-													"<a href='http://felvargs.com/adminsystem/manageusers.php?user=".$row["username"]."'>".$row["username"]."</a>" . 
-												"</div><br />";
-										echo 	"<div class='custom-container'><b>Admin Level:</b> " . $row["admin"] . "</div><br/>";
-										echo 	"<div class='custom-container'><b>points:</b> " . $points . "</div><br/>";
+										?>
+										<center>
+										<div class="custom-container"> 
+											<?php echo $row["id"]; ?>
+										</div>
+										<div class="custom-container">
+											<?php echo "<a href='http://lostfables.com/admin/manageusers.php?user=".$row["username"]."'>".$row["username"]."</a>"; ?>
+										</div> <br />
+
+										<div class="custom-container"><b>Admin Level:</b> <?php echo $row["admin"]; ?> </div> <br/>
+										<div class="custom-container"><b>Premium Level: </b><?php echo $row["premium"]; ?> </div> <br/>
+										<div class="custom-container"><b>points: </b> <?php echo $points; ?> </div><br/>
+							<?php	}	?>
+
+								<div class="panel panel-default">
+									<div class="panel-heading" style="text-align: center;">
+										<h2>Content</h2>
+									</div>
+									<div class='panel-body'>
+										<center>
+										<?php
+										$user = $_GET["user"];
+										$sql1 = "SELECT * FROM uploads WHERE owner = '$user' ORDER BY id DESC";
+										$result1 = $db_conn->query($sql1);
+										if ($result1->num_rows > 0) {
+											// output data of each row
+											while ($row1 = $result1->fetch_assoc()) {
+												echo "<div class='custom-container' style='text-align:center;'>
+													 <a href='itemedit.php?user=".$user."&id=".$row1['id']."'><img src='../".$row1["image"]."'title='".$row1["name"]."' style='width: 100px;'></a><br />".
+													 $row1['title']."</div> ";
+											}
+										}
+										?>
+										</center>
+									</div>
+								</div>
+
+				        		<div class="panel panel-default">
+					        		<div class="panel-heading" style="text-align: center;">
+										<h2>Edit Points</h2>
+									</div> <center>
+									<div class="panel-body">
+						        		<form role="form" action="#" method="post">
+											<b>points</b>: <textarea style="height:20px; width:100px;" name="points" value="points" /><?php echo $points; ?></textarea><hr>
+											<button type="submit" class="btn btn-default">submit items</button>
+										</form>
+									</div>
+								</div>
+								<?php
+
+									$points = $_POST['points'];
+									$points = str_replace(',','', $points);
+									if ($_SERVER['REQUEST_METHOD'] = $_POST AND isset($_POST['points'])) {
+										$insert = "UPDATE user SET points = '$points' WHERE username = '$user' ";
+										
+										//ADMIN LOGGER FOR ITEMS
+										$session = $_SESSION['login_user'];
+										$pointupdate = "from: ".$prevpoints."<br/>to: ".$points;
+										$time = date("Y/m/d - h:i:sa");
+											$insertlog = "INSERT INTO adminlogger (username, action, user, previous, changes, points, timeadded)
+											VALUES ('$session', 'point update', '$user', '$prevpoints', '$pointupdate', '$pointupdate', '$time')";
+
+										if ($db_conn->query($insert) === TRUE) {
+										    echo "<br />Items Successfully Updated";
+										}
+										if ($db_conn->query($insertlog) === TRUE) {
+										    echo "<br />Log Successfully Updated";
+										}
 									}
-								
-												?>
-												<div class="panel panel-default">
-													<div class="panel-heading" style="text-align: center;">
-														<h2>Content</h2>
-													</div>
-													<div class='panel-body'>
-													<center>
-													<?php
-													$user = $_GET["user"];
-													$sql1 = "SELECT * FROM uploads WHERE owner = '$user' ORDER BY id DESC";
-													$result1 = $db_conn->query($sql1);
-													if ($result1->num_rows > 0) {
-														// output data of each row
-														while ($row1 = $result1->fetch_assoc()) {
-																	echo "<div class='custom-container' style='text-align:center;'>
-																		 <a href='itemedit.php?user=".$user."&id=".$row1['id']."'><img src='../".$row1["image"]."'title='".$row1["name"]."' style='width: 100px;'></a><br />".
-																		 $row1['title']."</div> ";
-														}
-													}
-													?>
-													</center>
-													</div>
-												</div>
-
-								        		<div class="panel panel-default">
-								        		<div class="panel-heading" style="text-align: center;">
-													<h2>Edit Points</h2>
-												</div> <center>
-												<div class="panel-body">
-								        		<form role="form" action="#" method="post">
-													<b>points</b>: <textarea style="height:20px; width:100px;" name="points" value="points" /><?php echo $points; ?></textarea><hr>
-													<button type="submit" class="btn btn-default">submit items</button>
-												</form></div></div>
-												<?php
-
-												$points = $_POST['points'];
-												$points = str_replace(',','', $points);
-												if ($_SERVER['REQUEST_METHOD'] = $_POST AND isset($_POST['points'])) {
-													$insert = "UPDATE user SET points = '$points' WHERE username = '$user' ";
-													
-													//ADMIN LOGGER FOR ITEMS
-													$session = $_SESSION['login_user'];
-													$pointupdate = "from: ".$prevpoints."<br/>to: ".$points;
-													$time = date("Y/m/d - h:i:sa");
-														$insertlog = "INSERT INTO adminlogger (username, action, user, previous, changes, points, timeadded)
-														VALUES ('$session', 'point update', '$user', '$prevpoints', '$pointupdate', '$pointupdate', '$time')";
-
-													if ($db_conn->query($insert) === TRUE) {
-													    echo "<br />Items Successfully Updated";
-													}
-													if ($db_conn->query($insertlog) === TRUE) {
-													    echo "<br />Log Successfully Updated";
-													}
-												}
-											?>
+								?>
 												
-								   		<!-- ACHIEVEMENTS -->
-												<div class="panel panel-default">
-													<div class="panel-heading" style="text-align: center;">
-														<h2>Achievements</h2>
-														</div> <center>
-												<?php
-												$sql1 = "SELECT * FROM playerachievement WHERE username = '$user'";
-												$result1 = $db_conn->query($sql1);
-												if ($result1->num_rows > 0) {
-												    // output data of each row
-												    while ($row1 = $result1->fetch_assoc()) {
-												    	$achid = $row1['achievement'];
-														$sql2 = "SELECT * FROM achievements WHERE id = '$achid'";
-														$result2 = $db_conn->query($sql2);
-														if ($result2->num_rows > 0) {
-													    		while($row2 = $result2->fetch_assoc()) {
-															    	echo "<img src='".$row2["image"]."'title='".$row2["achievementname"]."'</img>";
-															    }
+						   		<!-- ACHIEVEMENTS -->
+									<div class="panel panel-default">
+										<div class="panel-heading" style="text-align: center;">
+											<h2>Achievements</h2>
+										</div> <center>
+										<div class="panel-body">
+											<?php
+											$sql1 = "SELECT * FROM playerachievement WHERE username = '$user'";
+											$result1 = $db_conn->query($sql1);
+											if ($result1->num_rows > 0) {
+												// output data of each row
+												while ($row1 = $result1->fetch_assoc()) {
+													$achid = $row1['achievement'];
+													$sql2 = "SELECT * FROM achievements WHERE id = '$achid'";
+													$result2 = $db_conn->query($sql2);
+													if ($result2->num_rows > 0) {
+														while($row2 = $result2->fetch_assoc()) {
+															echo "<img src='".$row2["image"]."'title='".$row2["achievementname"]."'</img>";
 														}
 													}
 												}
+											}
 											?>
-												</div></div></center>
+										</div>
+									</div></center>
 										<?php
 								    //Add Achivement
 									if ($loggedadmin >= 600) {
@@ -320,7 +334,7 @@ if ($loggedadmin >= 100) {
 								}
 							} else {
 								echo "<br/ ><div class='container' style='font-size: 25px;'>";
-						echo "<a href='http://felvargs.com/adminsystem/manageusers.php?us="; echo $user."&search=0-9'>0-9</a>";
+						echo "<a href='http://lostfables.com/admin/manageusers.php?us="; echo $user."&search=0-9'>0-9</a>";
 						echo " - <a href='manageusers.php?us="; echo $user."&search=A'>A</a>";
 						echo " - <a href='manageusers.php?us="; echo $user."&search=B'>B</a>";
 						echo " - <a href='manageusers.php?us="; echo $user."&search=C'>C</a>";
@@ -720,14 +734,26 @@ if ($loggedadmin >= 100) {
 											</div>";
 								}
 							}
-
-							
-} //Admin Level Checks
-						
-						?>
-					</div>
-				</div>
+				?>
+	</div>
+			 <!-- /. PAGE INNER  -->
 			</div>
+		 <!-- /. PAGE WRAPPER  -->
 		</div>
-	</body>
+	 <!-- /. WRAPPER  -->
+	<!-- SCRIPTS -AT THE BOTOM TO REDUCE THE LOAD TIME-->
+	<!-- JQUERY SCRIPTS -->
+	<script src="assets/js/jquery-1.10.2.js"></script>
+	  <!-- BOOTSTRAP SCRIPTS -->
+	<script src="assets/js/bootstrap.min.js"></script>
+	<!-- METISMENU SCRIPTS -->
+	<script src="assets/js/jquery.metisMenu.js"></script>
+	 <!-- MORRIS CHART SCRIPTS -->
+	 <script src="assets/js/morris/raphael-2.1.0.min.js"></script>
+	<script src="assets/js/morris/morris.js"></script>
+	  <!-- CUSTOM SCRIPTS -->
+	<script src="assets/js/custom.js"></script>
+	
+   <?php } ?>
+</body>
 </html>
