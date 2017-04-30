@@ -40,7 +40,7 @@ if (!empty($_FILES["fileToUpload"]["name"])) {
 	// if everything is ok, try to upload file
 	} else {
 		$imageid = $group;
-		$image = "images/groups/".$groupname.".png";
+		$image = "images/groups/".$groupname.".".$imageFileType;
 		if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_dir.$groupname.".".$imageFileType)) {
 			echo "The file ". basename( $_FILES["fileToUpload"]["name"]). " has been uploaded.";
 			
